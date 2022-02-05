@@ -7,7 +7,7 @@
 
 ## To Setup Backend
 
-- You need to have Python 3 at least installed.
+- You need to have Python 3.7 (specific for no errors) at least installed.
 
 ```sh
 $ git clone URL

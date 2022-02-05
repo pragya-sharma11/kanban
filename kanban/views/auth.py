@@ -6,14 +6,14 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from relevvo import serializers
+from kanban import serializers
 
 
 class RegistrationAPIView(APIView):
-    permission_classes = (AllowAny)
+    permission_classes = (AllowAny,)
 
     def post(self, request):
-        serializer = serializers.RegistrationSerializer(data=request.POST)
+        serializer = serializers.RegistrationSerializer(data=request.data)
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -25,7 +25,6 @@ class RegistrationAPIView(APIView):
             raise exceptions.APIException(
                 "A user with that email already exists.", status.HTTP_409_CONFLICT
             )
-
         user = get_user_model().objects.create_user(**serializer.validated_data)
         token = RefreshToken.for_user(user).access_token
         user_logged_in.send(sender=user.__class__, request=request, user=user)
@@ -35,7 +34,7 @@ class RegistrationAPIView(APIView):
 
 
 class LoginAPIView(APIView):
-    permission_classes = (AllowAny)
+    permission_classes = (AllowAny,)
 
     def post(self, request):
         serializer = serializers.LoginSerializer(data=request.data)

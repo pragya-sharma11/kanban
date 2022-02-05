@@ -18,12 +18,19 @@ from django.urls import path, include, re_path
 
 from kanban import views
 
+auth_url_patterns = [
+    path("login/", views.LoginAPIView.as_view()),
+    path("registration/", views.RegistrationAPIView.as_view())
+
+]
+
 api_url_patterns = [
-    path("change-password", views.ChangePasswordAPIView.as_view()),
+    path("change-password/", views.ChangePasswordAPIView.as_view()),
     path("<int:id>/", views.LoggedInUserAPIView.as_view())
 ]
 
 urlpatterns = [
+    re_path('auth/', include(auth_url_patterns)),
     re_path('api/', include(api_url_patterns)),
     path('admin/', admin.site.urls),
 ]

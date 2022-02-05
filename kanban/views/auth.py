@@ -10,7 +10,7 @@ from relevvo import serializers
 
 
 class RegistrationAPIView(APIView):
-    permission_classes = (AllowAny,)
+    permission_classes = (AllowAny)
 
     def post(self, request):
         serializer = serializers.RegistrationSerializer(data=request.POST)
@@ -35,7 +35,7 @@ class RegistrationAPIView(APIView):
 
 
 class LoginAPIView(APIView):
-    permission_classes = (AllowAny,)
+    permission_classes = (AllowAny)
 
     def post(self, request):
         serializer = serializers.LoginSerializer(data=request.data)
